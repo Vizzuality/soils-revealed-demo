@@ -1,18 +1,9 @@
-import toml
 from dataclasses import dataclass
 
 import ee
 import s3fs
 import xarray as xr
 import rioxarray
-from dotenv import load_dotenv
-
-# Take environment variables from .env
-# Load the TOML file
-with open('.env', 'r') as file:
-    toml_data = file.read()
-# Parse the TOML data
-env_var = toml.loads(toml_data)
 
 
 def read_zarr_from_s3(access_key_id, secret_accsess_key, dataset, group=None):
@@ -32,19 +23,19 @@ def read_zarr_from_s3(access_key_id, secret_accsess_key, dataset, group=None):
     return ds
 
 
-def read_ds():
+def read_ds(access_key_id, secret_accsess_key):
     # Read Recent dataset
     dataset = 'global-dataset'
     group = 'recent'
-    ds = read_zarr_from_s3(access_key_id=env_var["S3_ACCESS_KEY_ID"],
-                           secret_accsess_key=env_var["S3_SECRET_ACCESS_KEY"],
+    ds = read_zarr_from_s3(access_key_id=access_key_id,
+                           secret_accsess_key=secret_accsess_key,
                            dataset=dataset, group=group)
     ds = ds.drop_dims('depth').sel(time=['2000-12-31T00:00:00.000000000', '2018-12-31T00:00:00.000000000'])
 
     # Read land cover dataset
     dataset = 'land-cover'
-    ds_lc = read_zarr_from_s3(access_key_id=env_var["S3_ACCESS_KEY_ID"],
-                              secret_accsess_key=env_var["S3_SECRET_ACCESS_KEY"],
+    ds_lc = read_zarr_from_s3(access_key_id=access_key_id,
+                              secret_accsess_key=secret_accsess_key,
                               dataset=dataset)
 
     ds['land-cover'] = ds_lc['land-cover']

@@ -6,31 +6,25 @@ import ee
 import streamlit as st
 from streamlit_folium import st_folium
 from shapely import Polygon
-from dotenv import load_dotenv
 
 from soils_revealed.map import MapGEE
 from soils_revealed.data import GEEData, read_ds
 from soils_revealed.processing import get_data, get_plot
 from soils_revealed.verification import selected_bbox_too_large, selected_bbox_in_boundary
 
-# Take environment variables from .env
-# Load the TOML file
-with open('.env', 'r') as file:
-    toml_data = file.read()
-# Parse the TOML data
-env_var = toml.loads(toml_data)
-
-
-# Initialize GEE
-private_key = env_var["EE_PRIVATE_KEY"]
-ee_credentials = ee.ServiceAccountCredentials(email=private_key['client_email'], key_data=json.dumps(private_key))
-ee.Initialize(credentials=ee_credentials)
-
 MAP_CENTER = [-2.2, 113.8]
 MAP_ZOOM = 10
 MAX_ALLOWED_AREA_SIZE = 20.0
 FILENAME = 'data/land-cover.pkl'
 BTN_LABEL = "Submit"
+
+# Load the environment variables from .env
+env_var = toml.load(".env")
+
+# Initialize GEE
+private_key = env_var["EE_PRIVATE_KEY"]
+ee_credentials = ee.ServiceAccountCredentials(email=private_key['client_email'], key_data=json.dumps(private_key))
+ee.Initialize(credentials=ee_credentials)
 
 # Load icon
 icon = Image.open("images/soils03.png")
@@ -41,7 +35,7 @@ for dataset in ['SOC-Stock-Change', 'Global-Land-Cover']:
     datasets[dataset] = GEEData(dataset)
 
 # Read data
-ds = read_ds()
+ds = read_ds(access_key_id=env_var["S3_ACCESS_KEY_ID"], secret_accsess_key=env_var["S3_SECRET_ACCESS_KEY"])
 
 
 # Create the Streamlit app and define the main code:
