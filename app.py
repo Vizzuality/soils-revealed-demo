@@ -1,4 +1,4 @@
-import os
+import toml
 import json
 from PIL import Image
 
@@ -14,11 +14,16 @@ from soils_revealed.processing import get_data, get_plot
 from soils_revealed.verification import selected_bbox_too_large, selected_bbox_in_boundary
 
 # Take environment variables from .env
-load_dotenv()
+# Load the TOML file
+with open('.env', 'r') as file:
+    toml_data = file.read()
+# Parse the TOML data
+env_var = toml.loads(toml_data)
+
 
 # Initialize GEE
-private_key = json.loads(os.getenv("EE_PRIVATE_KEY"))
-ee_credentials = ee.ServiceAccountCredentials(email=private_key['client_email'], key_data=os.getenv("EE_PRIVATE_KEY"))
+private_key = env_var["EE_PRIVATE_KEY"]
+ee_credentials = ee.ServiceAccountCredentials(email=private_key['client_email'], key_data=json.dumps(private_key))
 ee.Initialize(credentials=ee_credentials)
 
 MAP_CENTER = [-2.2, 113.8]
