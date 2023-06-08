@@ -1,5 +1,4 @@
 import os
-import toml
 import json
 from PIL import Image
 
@@ -7,6 +6,7 @@ import ee
 import streamlit as st
 from streamlit_folium import st_folium
 from shapely import Polygon
+from dotenv import load_dotenv
 
 from soils_revealed.map import MapGEE
 from soils_revealed.data import GEEData, read_ds
@@ -20,10 +20,10 @@ FILENAME = 'data/land-cover.pkl'
 BTN_LABEL = "Submit"
 
 # Load the environment variables from .env
-#env_var = toml.load(".env")
+load_dotenv()
 
 # Initialize GEE
-private_key = os.getenv["EE_PRIVATE_KEY"]
+private_key = json.loads(os.getenv("EE_PRIVATE_KEY"))
 ee_credentials = ee.ServiceAccountCredentials(email=private_key['client_email'], key_data=json.dumps(private_key))
 ee.Initialize(credentials=ee_credentials)
 
@@ -36,7 +36,7 @@ for dataset in ['SOC-Stock-Change', 'Global-Land-Cover']:
     datasets[dataset] = GEEData(dataset)
 
 # Read data
-ds = read_ds(access_key_id=os.getenv["S3_ACCESS_KEY_ID"], secret_accsess_key=os.getenv["S3_SECRET_ACCESS_KEY"])
+ds = read_ds(access_key_id=os.getenv("S3_ACCESS_KEY_ID"), secret_accsess_key=os.getenv("S3_SECRET_ACCESS_KEY"))
 
 
 # Create the Streamlit app and define the main code:

@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 .idea/*
 .env
-
+.env.toml
 # C extensions
 *.so
 
