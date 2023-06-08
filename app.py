@@ -24,7 +24,7 @@ load_dotenv()
 
 # Initialize GEE
 private_key = os.getenv("EE_PRIVATE_KEY")
-st.write(type(private_key))
+st.write(type(os.getenv("S3_ACCESS_KEY_ID")))
 #private_key = json.loads(os.getenv("EE_PRIVATE_KEY"))
 
 ee_credentials = ee.ServiceAccountCredentials(email=private_key['client_email'], key_data=json.dumps(private_key))
