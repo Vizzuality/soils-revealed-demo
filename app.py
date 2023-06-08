@@ -23,7 +23,11 @@ BTN_LABEL = "Submit"
 load_dotenv()
 
 # Initialize GEE
-private_key = json.loads(os.getenv("EE_PRIVATE_KEY"))
+if "STREAMLIT_SERVER_ADDRESS" in os.environ:
+    private_key = os.getenv("EE_PRIVATE_KEY")
+else:
+    private_key = json.loads(os.getenv("EE_PRIVATE_KEY"))
+
 ee_credentials = ee.ServiceAccountCredentials(email=private_key['client_email'], key_data=json.dumps(private_key))
 ee.Initialize(credentials=ee_credentials)
 
