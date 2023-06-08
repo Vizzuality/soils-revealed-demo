@@ -1,25 +1,28 @@
+import os
+import json
 from PIL import Image
 
 import ee
 import streamlit as st
 from streamlit_folium import st_folium
 from shapely import Polygon
-from dask.distributed import Client, LocalCluster
+from dotenv import load_dotenv
 
 from soils_revealed.map import MapGEE
 from soils_revealed.data import GEEData, read_ds
 from soils_revealed.processing import get_data, get_plot
 from soils_revealed.verification import selected_bbox_too_large, selected_bbox_in_boundary
 
-# Start distributed scheduler locally.
-#client = Client()
-#client
+# Take environment variables from .env
+load_dotenv()
 
 # Initialize GEE
-ee.Initialize()
+private_key = json.loads(os.getenv("EE_PRIVATE_KEY"))
+ee_credentials = ee.ServiceAccountCredentials(email=private_key['client_email'], key_data=os.getenv("EE_PRIVATE_KEY"))
+ee.Initialize(credentials=ee_credentials)
 
-MAP_CENTER = [25.0, 55.0]
-MAP_ZOOM = 3
+MAP_CENTER = [-2.2, 113.8]
+MAP_ZOOM = 10
 MAX_ALLOWED_AREA_SIZE = 20.0
 FILENAME = 'data/land-cover.pkl'
 BTN_LABEL = "Submit"
