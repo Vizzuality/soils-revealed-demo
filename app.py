@@ -6,8 +6,8 @@ import streamlit as st
 from streamlit_folium import st_folium
 from shapely import Polygon
 
-from soils_revealed.map import MapGEE
-from soils_revealed.data import GEEData, read_ds
+from soils_revealed.maps import MapGEE
+from soils_revealed.data_params import GEEData, read_ds
 from soils_revealed.processing import get_data, get_plot
 from soils_revealed.verification import selected_bbox_too_large, selected_bbox_in_boundary
 

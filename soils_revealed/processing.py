@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from soils_revealed.data import GEEData
+from soils_revealed.data_params import GEEData
 
 dataset = GEEData('Global-Land-Cover')
 
