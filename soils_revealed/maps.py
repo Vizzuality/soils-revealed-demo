@@ -110,7 +110,7 @@ class LeafletMap(ipyl.Map):
             warnings.warn("Rectangle hasn't been drawn yet. Polygon is not available.")
             return None
 
-        return self.geometry['features'][0]['geometry']['coordinates']
+        return self.geometry['features'][0]['geometry']['coordinates'][0]
 
     @property
     def polygon(self):

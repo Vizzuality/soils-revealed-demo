@@ -293,12 +293,12 @@ class SatelliteImageryData:
     @property
     def vizz_params_rgb(self):
         return {
-            'Sentinel-2-Top-of-Atmosphere-Reflectance': {'min':0,'max':3000, 'bands':['B4','B3','B2']},
-            'Landsat-4-Surface-Reflectance': {'min':0,'max':3000, 'gamma':1.4, 'bands':['B3','B2','B1']},
-            'Landsat-5-Surface-Reflectance': {'min':0,'max':3000, 'gamma':1.4, 'bands':['B3','B2','B1']},
-            'Landsat-7-Surface-Reflectance': {'min':0,'max':3000, 'gamma':1.4, 'bands':['B3','B2','B1']},
-            'Landsat-457-Surface-Reflectance': {'min':0,'max':3000, 'gamma':1.4, 'bands':['B3','B2','B1']},
-            'Landsat-8-Surface-Reflectance': {'min':0,'max':3000, 'gamma':1.4, 'bands':['B4','B3','B2']}
+            'Sentinel-2-Top-of-Atmosphere-Reflectance': {'min':100,'max':2500, 'bands':['B4','B3','B2']},
+            'Landsat-4-Surface-Reflectance': {'min':100,'max':2500, 'gamma':1.4, 'bands':['B3','B2','B1']},
+            'Landsat-5-Surface-Reflectance': {'min':100,'max':2500, 'gamma':1.4, 'bands':['B3','B2','B1']},
+            'Landsat-7-Surface-Reflectance': {'min':100,'max':2500, 'gamma':1.4, 'bands':['B3','B2','B1']},
+            'Landsat-457-Surface-Reflectance': {'min':100,'max':2500, 'gamma':1.4, 'bands':['B3','B2','B1']},
+            'Landsat-8-Surface-Reflectance': {'min':100,'max':2500, 'gamma':1.4, 'bands':['B4','B3','B2']}
             }[self.dataset]
     
     @property
